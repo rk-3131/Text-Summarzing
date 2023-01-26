@@ -1,0 +1,25 @@
+Text summarizer will be useful to summarize large text into meaningful short paragraph.
+
+argparse is module in python which is used to create the CLI by the programmer itself. Programmer has to create the object of the argparse then using that object program can make another input arguments ready.
+eg. parserObject = argparse.ArgumentsParser()
+parserObject.add_argument(name, help= "")
+.
+.
+.
+args = parserObject.parse_args()
+return args
+
+Then from the library of NLTK we will be adding the tokenizer. It will have word tokenizer and sentence tokenizer. Word tokenizer will tokenize the whole documents in the words and then save them into the list. Simillarly when sentence tokenizer is used it tokenize the whole documents and then it is added into the list.
+
+corpus is library which has huge set of data in the library. It has many languages but here we will be focusing on the English. Stopwords are the words which are in the documents and they dont have any significant meaning. These words can have words like "a, an, the, and" etc.
+
+The string is another library which has variety of another sub-library. The punctuation library is useful to detect punctuation symbols and then thay can be eliminated using the library.
+
+Another library called as the probability which also belong to the NLTK, this will be usefull to categories the words in their frequency of occurence can be very useful. It is used to detect the words in ascending or descending order.
+
+The nlargest is the library which return maximum of the given number of arguments passed to the function. We can even give it number of such elements that we want as output. If we pass numbers as heapq.nlargest(5, list) then we will get output of the largest 5 elements from the given list
+
+defaultdict is another module in the collections which has same functionalities as of the simple dictionary like storing values in the form of key and value pair. Main modification in the defaultdict is that it dont even raises the exception if it dont have any value associated with any key. It just returns the default value from the database.
+
+
+
