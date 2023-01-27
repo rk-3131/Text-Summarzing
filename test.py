@@ -2,7 +2,7 @@
 
 # from a Python iterable
 
-import heapq
+from heapq import nlargest
 
  
 
@@ -10,6 +10,6 @@ iterable = [6,1,7,9,3,5,4]
 
 selectCount = 4
 
-largests = heapq.nlargest(selectCount, iterable)
+largests = nlargest(selectCount, iterable)
 
 print(largests)

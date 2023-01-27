@@ -1,21 +1,31 @@
 import argparse
-from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 from string import punctuation
 from nltk.probability import FreqDist
+from heapq import nlargest
 from collections import defaultdict
 
-
-
-
-
+def main():
+    argRecieved = parser_method()
+    # This will get us the reference of the arguements recieved whenever we use the command line interface to enter the name and length of the file
+    text = file_input(argRecieved.Filepath)
+    # This line will be used to give input to the file. The file is given as input after taking it from command line interface
+    updated_text = remove_extra(text)
+    # Extra symbols such as \t \n along with any other symbols will be removed in this step
+    tokenized_sentence, tokenized_words = tokenizer_method(updated_text)
+    # Sentence and the words will be tokenized after above methods. For words tokenization we have to remove even the punctuation along with the stopwords. After all this two sentence and words are returned after the tokenization in two separate variables
+    get_rank_of_sentence = score_tokens(tokenized_words, tokenized_sentence)
+    # This method is used to get the rank of each sentence based on the occurence of each word in the frequency distrubution of the words available.
+    print(final_summarize(get_rank_of_sentence,argRecieved.length, tokenized_sentence))
+    # This methods returns final summary of the text after all the proccessing and ranking of the sentences. It is used to get the list of the lenghts which are larger based on the key supplied to it.
 
 
 
 def parser_method():
     parser = argparse.ArgumentParser()
     parser.add_argument("Filepath", help="Enter the file name in same directory")
-    parser.add_argument("-l", default=4, help="What is number of sentence")
+    parser.add_argument("-l","--length", default=4, help="What is number of sentence")
     args = parser.parse_args()
     return args
     '''
@@ -26,7 +36,7 @@ def parser_method():
 
 def file_input(file_path):
     try:
-        with open(file_path, r) as f:
+        with open(file_path, 'r') as f:
             return f.read()
     except Exception as e:
         print("Error occured as follows",e)
@@ -74,7 +84,7 @@ def score_tokens(word_tokens, sent_tokens):
     for i, sent in enumerate(sent_tokens):
         for words in word_tokenize(sent.lower()):
             if words in word_frequency:
-                rank[i] += word_frequency
+                rank[i] += word_frequency[words]
 
     return rank
 
@@ -92,6 +102,25 @@ def final_summarize(rank, length, sentence):
     if (int(length) > len(sentence)):
         print("You have requested more number of summarizes sentence than that of the actual sentences in the original data.")
         return ""
+        '''
+        If length of the asked sentence in the code is greater than that of the original number of sentences in the sentences then it will print the message and function will return empty string.
+        '''
 
     else:
+        indices = nlargest(int(length), rank, key=rank.get)
+        final_summary = [sentence[j] for j in indices]
+
+        return " ".join(final_summary)
+
+        '''
+        Above else statement is useful for the purpose of summarizing final text
+        Here we have used the method nlargest to extract the largest elements from the rank based on the values in the dictionary specified by key = rank.get
+        In simple words it returns list of the length key from the ranks that corresponds to largest value
+        After that we have created empty list 
+        The list final_summary will be fulled by the corresponding number of the element in the sentence list
+        Finally it is returned
+        '''
+
+if __name__ == '__main__':
+    main()
         
