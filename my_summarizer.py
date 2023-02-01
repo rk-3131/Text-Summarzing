@@ -62,7 +62,7 @@ def remove_extra(data):
     '''
 
 def tokenizer_method(data):
-    stop_words = (stopwords.words("english") + list(punctuation))
+    stop_words = set(stopwords.words("english") + list(punctuation))
     all_words = word_tokenize(data.lower())
     for words in all_words:
         if words in stop_words:
